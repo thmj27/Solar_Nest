@@ -1,0 +1,13 @@
+{% for w in r.warnings %}<div class="warn">⚠ {{ w }}</div>{% endfor %}
+<div class="grid g2" style="margin:20px 0"><div class="card hl"><div class="k">☀ Recommended Solar System</div><div class="big">{{ r.solar_kw|round(1) }} kW Solar</div></div>
+<div class="card hl"><div class="k">🔋 Recommended Battery</div><div class="big">{{ r.battery_kwh|round(1) }} kWh</div></div></div>
+<div class="grid g3">{% for l,v,h in [("Daily Energy Consumption", r.demand|string+" kWh","About what you use in one day"),("Solar Coverage", r.coverage|string+"%","Share of demand solar can supply"),("Estimated Cost","₹{:,}".format(r.cost),"Panels, battery and installation"),("Monthly Savings","₹{:,}".format(r.monthly_saving),"Average, at current grid tariff"),("Payback", r.payback_years|string+" yrs","Estimated time to recover cost"),("CO₂ Reduction", r.co2_tonnes|string+" t/yr","Estimated avoided emissions")] %}
+<div class="card"><div class="k">{{ l }}</div><div class="stat">{{ v }}</div><div class="k">{{ h }}</div></div>{% endfor %}</div>
+<div class="card" style="margin:20px 0"><h3>Our recommendation</h3><p>{{ r.recommendation }}</p><b>Why this size?</b><ul>{% for x in r.reasons %}<li>{{ x }}</li>{% endfor %}</ul>
+<details><summary>Advanced: how it was calculated</summary><p class="k">Solar needed {{ r.needed_kw }} kW (demand ÷ {{ r.psh }} sun hours ÷ efficiency); roof allows {{ r.max_kw }} kW. Battery = night energy × backup days ÷ (80% usable × 90% efficiency). All values are planning estimates.</p></details></div>
+<div class="grid g3"><div class="card"><h3>Energy by appliance</h3><canvas id="c1"></canvas></div><div class="card"><h3>Daily use vs solar (kWh/hour)</h3><canvas id="c2"></canvas></div><div class="card"><h3>Monthly savings (₹)</h3><canvas id="c3"></canvas></div></div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>const R={{ r|tojson }};const G="#2f6b45",Y="#d9a441";
+new Chart(c1,{type:"doughnut",data:{labels:R.breakdown.map(b=>b.name),datasets:[{data:R.breakdown.map(b=>b.kwh),backgroundColor:["#2f6b45","#4f8a5f","#8fb996","#d9a441","#b7c9a8","#7a8f6a","#c9b27c"]}]},options:{plugins:{legend:{position:"bottom"}}}});
+new Chart(c2,{type:"line",data:{labels:[...Array(24).keys()].map(h=>h+":00"),datasets:[{label:"Your usage",data:R.hourly_demand,borderColor:G,tension:.35},{label:"Solar output",data:R.hourly_solar,borderColor:Y,backgroundColor:"#d9a44133",fill:true,tension:.35}]},options:{scales:{x:{ticks:{maxTicksLimit:6}}}}});
+new Chart(c3,{type:"bar",data:{labels:R.months,datasets:[{label:"Savings ₹",data:R.monthly,backgroundColor:G,borderRadius:6}]},options:{plugins:{legend:{display:false}}}});</script>

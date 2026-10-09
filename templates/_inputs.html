@@ -1,0 +1,2 @@
+<div class="card" style="margin:20px 0"><h3>Property and appliances</h3><p class="k">{{ p.property_type }} · {{ inp.city }}, {{ inp.state }} · {{ inp.rooms }} rooms · {{ inp.guests }} guests · roof {{ inp.roof_area }} m² · budget ₹{{ "{:,.0f}".format(inp.budget) }} · occupancy {{ inp.occupancy }}%</p>
+<table><tr><th>Appliance</th><th>Qty</th><th>Watts</th><th>Hours/day</th></tr>{% for a in inp.appliances %}<tr><td>{{ a.name }}</td><td>{{ a.qty }}</td><td>{{ a.watts }}</td><td>{{ a.hours }}</td></tr>{% endfor %}</table></div>

@@ -1,0 +1,8 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{% block title %}SolarNest{% endblock %}</title><link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"></head><body>
+<nav><div class="wrap"><a class="logo" href="/">☀ SolarNest</a>
+{% if not session.uid %}<a class="hide" href="/#how">How It Works</a><a class="hide" href="/#features">Features</a>{% else %}<a href="{{ url_for('wizard') }}">New Plan</a><a href="{{ url_for('projects') }}">My Projects</a>{% if session.admin %}<a href="{{ url_for('admin') }}">Admin</a>{% endif %}{% endif %}
+<span class="sp"></span>{% if session.uid %}<span class="k hide">Hi, {{ session.name }}</span><a href="{{ url_for('logout') }}">Logout</a>{% else %}<a href="{{ url_for('login') }}">Login</a><a class="btn" href="{{ url_for('signup') }}">Sign Up</a>{% endif %}</div></nav>
+<div class="wrap">{% for c,m in get_flashed_messages(with_categories=true) %}<div class="flash {{ c }}">{{ m }}</div>{% endfor %}</div>
+{% block body %}{% endblock %}
+<footer><div class="wrap">☀ SolarNest — from your energy needs to your solar plan, made simple. All figures are planning estimates.</div></footer></body></html>

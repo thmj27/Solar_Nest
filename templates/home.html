@@ -1,0 +1,15 @@
+{% extends "base.html" %}{% block body %}
+<header class="hero rel"><div class="sun-art"></div><div class="wrap fade"><h1>Plan Your Solar Future</h1><p>Turn your energy needs into a smarter solar plan for your homestay or eco-resort.</p>
+<a class="btn lg" href="{{ url_for('signup') }}">Get Started</a> <a class="btn ghost lg" href="#how">See how it works</a></div></header>
+<section><div class="wrap"><h2 class="center">Why use SolarNest?</h2><div class="grid g3" style="margin-top:28px">
+<div class="card lift"><div class="ico">🌿</div><h3>Built for stays</h3><p class="k">Made for homestays and small eco-resorts, not generic houses.</p></div>
+<div class="card lift"><div class="ico">🧭</div><h3>No jargon</h3><p class="k">Pick appliances, we handle kW, kWh and battery maths.</p></div>
+<div class="card lift"><div class="ico">📄</div><h3>Shareable plan</h3><p class="k">Save projects and print a report for your family or installer.</p></div></div></div></section>
+<section id="how" style="background:var(--g1)"><div class="wrap"><h2 class="center">How it works</h2><div class="grid g3" style="margin-top:28px">
+{% for t,d in [("Choose location","Sunlight differs by region."),("Describe property","Rooms, roof and budget."),("Pick appliances","Smart defaults included."),("Set usage","Occupancy and night use."),("Get your plan","Solar, battery, cost, savings.")] %}
+<div class="card"><div class="num">{{ loop.index }}</div><h3>{{ t }}</h3><p class="k">{{ d }}</p></div>{% endfor %}</div></div></section>
+<section id="features"><div class="wrap"><h2 class="center">Key features</h2><div class="grid g3" style="margin-top:28px">
+{% for i,t,d in [("🧙","Guided wizard","Six clear steps, minimal typing."),("📊","Visual dashboard","Charts for usage, solar and savings."),("💰","Cost and savings","Budget warnings and payback."),("🌍","CO₂ impact","See the environmental benefit."),("🗂","Saved projects","Edit and recalculate anytime."),("🧪","Expert controls","Edit watts, hours and more.")] %}
+<div class="card lift"><div class="ico">{{ i }}</div><h3>{{ t }}</h3><p class="k">{{ d }}</p></div>{% endfor %}</div>
+<div class="cta" style="margin-top:64px"><h2>Ready to plan your solar system?</h2><p>It takes about five minutes.</p><a class="btn sun lg" href="{{ url_for('signup') }}">Get Started</a></div></div></section>
+{% endblock %}

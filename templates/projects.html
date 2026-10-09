@@ -1,0 +1,5 @@
+{% extends "base.html" %}{% block body %}<div class="wrap" style="padding:32px 24px 60px"><div class="row" style="margin:0 0 20px"><h1>My Projects</h1><a class="btn" href="{{ url_for('wizard') }}">+ New Plan</a></div>
+{% if not projects %}<div class="card center"><h3>No projects yet</h3><p class="k">Create your first solar plan in about five minutes.</p><a class="btn" href="{{ url_for('wizard') }}">Get Started</a></div>{% endif %}
+<div class="grid g3">{% for p in projects %}<div class="card lift"><h3>{{ p.name }}</h3><p class="k">{{ p.city }}, {{ p.state }} · {{ p.property_type }}</p><p><b>{{ p.solar_kw|round(1) }} kW Solar</b><br><b>{{ p.battery_kwh|round(1) }} kWh Battery</b><br>Estimated Cost: ₹{{ "{:,.0f}".format(p.cost) }}</p>
+<a class="btn" href="{{ url_for('project', pid=p.id) }}">View</a> <a class="btn ghost" href="{{ url_for('edit_project', pid=p.id) }}">Edit</a>
+<form method="post" action="{{ url_for('delete_project', pid=p.id) }}" style="display:inline" onsubmit="return confirm('Delete this project?')"><button class="btn danger">Delete</button></form></div>{% endfor %}</div></div>{% endblock %}

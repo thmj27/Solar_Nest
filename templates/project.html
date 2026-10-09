@@ -1,0 +1,4 @@
+{% extends "base.html" %}{% block body %}<div class="wrap" style="padding:32px 24px 60px"><div class="row" style="margin:0 0 8px"><div><h1>{{ p.name }}</h1><p class="k">Your solar plan — all figures are estimates.</p></div>
+<div style="display:flex;gap:10px;flex-wrap:wrap;align-items:start"><a class="btn ghost" href="{{ url_for('edit_project', pid=p.id) }}">Edit Project</a>
+<form method="post" action="{{ url_for('recalc', pid=p.id) }}"><button class="btn ghost">Recalculate</button></form><a class="btn" href="{{ url_for('report', pid=p.id) }}" target="_blank">Download Report</a></div></div>
+{% include "_results.html" %}{% include "_inputs.html" %}</div>{% endblock %}
